@@ -6,7 +6,7 @@ app.get("/", (_, res) => {
 });
 
 app.get("/mode", (_, res) => {
-  res.json({ mode: "process.env.MODE" });
+  res.json({ mode: process.env.MODE });
 });
 
 app.get("/hash", (_, res) => {
