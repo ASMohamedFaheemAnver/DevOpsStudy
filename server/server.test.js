@@ -15,3 +15,11 @@ describe("GET /mode", () => {
     expect(res.statusCode).toBe(200);
   });
 });
+
+describe("GET /hash", () => {
+  it("Should return a hash", async () => {
+    const res = await request(app).get("/hash");
+    expect(res.body.hash).toBeDefined();
+    expect(res.statusCode).toBe(200);
+  });
+});
