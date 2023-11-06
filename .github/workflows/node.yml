@@ -19,8 +19,15 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{matrix.node-version}} # Run on each matricts version we provided
-      - name: Install dependancies
-        run: npm ci # Like npm install in automation
+          node-version: ${{matrix.node-version}} # Run on each matrix version we provided
+      - name: Install dependencies
+        run: |
+          if [ -e yarn.lock ]; then
+          yarn install --frozen-lockfile
+          elif [ -e package-lock.json ]; then
+          npm ci
+          else
+          npm i
+          fi
       - name: Test server
         run: npm test
