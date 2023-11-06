@@ -13,7 +13,7 @@ jobs:
       matrix:
         node-version: ["16.18.0"]
     env:
-      MODE: "dev"
+      MODE: ${{secrets.MODE}}
     steps:
       - uses: actions/checkout@v4 # Pre made checkout to branch action
       - name: Use Node.js
