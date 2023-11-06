@@ -9,4 +9,8 @@ app.get("/mode", (_, res) => {
   res.json({ mode: "process.env.MODE" });
 });
 
+app.get("/hash", (_, res) => {
+  res.json({ hash: Math.random() });
+});
+
 module.exports = app;
