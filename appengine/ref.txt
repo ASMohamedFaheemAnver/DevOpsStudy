@@ -1,0 +1,8 @@
+# https://cloud.google.com/source-repositories/docs/automate-app-engine-deployments-cloud-build
+# Create a trigger with github repository.
+
+# Example cloud build yaml
+# cloudbuild.yaml
+
+# How to set environment variables using Google Cloud Build or other method in Google App Engine Standard Environment?
+# https://stackoverflow.com/questions/52840187/how-to-set-environment-variables-using-google-cloud-build-or-other-method-in-goo

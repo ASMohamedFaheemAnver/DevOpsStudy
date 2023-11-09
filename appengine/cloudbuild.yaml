@@ -1,0 +1,38 @@
+steps:
+  - name: 'node'
+    entrypoint: yarn
+    args: ['install']
+  - name: 'node'
+    entrypoint: npm
+    args: ['run', 'create-env']
+    env:
+      - 'MONGODB_URI=${_MONGODB_URI}'
+      - 'JWT_SECRET=${_JWT_SECRET}'
+      - 'MAIL_HOST=${_MAIL_HOST}'
+      - 'MAIL_USER=${_MAIL_USER}'
+      - 'MAIL_PASSWORD=${_MAIL_PASSWORD}'
+      - 'MAIL_FROM=${_MAIL_FROM}'
+      - 'AWS_ACCESS_KEY_ID=${_AWS_ACCESS_KEY_ID}'
+      - 'AWS_SECRETE_ACCESS_KEY=${_AWS_SECRETE_ACCESS_KEY}'
+      - 'AWS_BUCKET=${_AWS_BUCKET}'
+      - 'AWS_REGION=${_AWS_REGION}'
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: bash
+    args:
+      - '-c'
+      - |
+        echo $$FIREBASE_ADMIN_KEY > ./src/serviceAccountKey.json
+    env:
+      - 'FIREBASE_ADMIN_KEY=${_FIREBASE_ADMIN_KEY}'
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['app', 'deploy', '--promote']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: bash
+    args:
+      [
+        '-c',
+        'gcloud app versions list --format="value(version.id)" --sort-by=~traffic_split | tail +2 | xargs -r gcloud app versions delete --quiet',
+      ]
+timeout: '1600s' # 10 min
+options:
+  logging: CLOUD_LOGGING_ONLY
