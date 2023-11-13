@@ -1,0 +1,5 @@
+# I think need to create a tmp and restart.txt inside root of the server we refer in nodejs config. // Refer ref.png to see the config
+cd server && rm -rf tmp
+PATH=/opt/plesk/node/16/bin:$PATH; cd server && npm install --legacy-peer-deps && npm run plesk-build
+cd server && mkdir tmp
+cd server && touch tmp/restart.txt
