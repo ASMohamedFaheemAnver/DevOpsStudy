@@ -36,3 +36,9 @@ Follow the instructions eg. mkdir actions-runner-react && cd actions-runner-reac
 
 # How to open port in ec2 instance
 -> Security -> Security groups -> Edit inbound rules -> Add rule with custom TCP with port and access ip
+
+# Check container logs 
+-> https://stackoverflow.com/questions/47829345/how-to-see-the-logs-of-a-docker-container
+docker ps
+docker ps -a
+docker logs --since=1h <container_id>
