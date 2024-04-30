@@ -1,0 +1,31 @@
+name: Deploy node application
+on:
+  push:
+    branches:
+      - udev
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./aws/server/
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Login to docker hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build docker image
+        run: docker build -t codersauthority/server  .
+      - name: Publish image to docker hub
+        run: docker push codersauthority/server:latest
+
+  deploy:
+    needs: build
+    runs-on: self-hosted # Can use tag/name of the runner we created aws-ec2/Linux/x64/self-hosted
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull codersauthority/server:latest
+      - name: Delete old container
+        run: docker rm -f server-container
+      - name: Run docker container
+        run: docker run -d -p 4000:4000 --name server-container -e MONGO_PASSWORD='${{ secrets.MONGO_USERNAME }}' -e MONGO_PASSWORD='${{ secrets.MONGO_PASSWORD }}' codersauthority/server

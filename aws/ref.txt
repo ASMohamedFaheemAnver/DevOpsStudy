@@ -25,3 +25,14 @@ docker --version
 
 # permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/containers/json": dial unix /var/run/docker.sock: connect: permission denied
 sudo chmod 666 /var/run/docker.sock
+
+# We are creating a self hosted runner in the github and connect with our ec2 instance
+-> Connect to ec2
+Follow the instructions eg. mkdir actions-runner-react && cd actions-runner-react, etc
+-> https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/configuring-the-self-hosted-runner-application-as-a-service
+
+# Docker hub user name and password for github actions
+-> https://www.youtube.com/watch?v=CDWLWjnYSGg
+
+# How to open port in ec2 instance
+-> Security -> Security groups -> Edit inbound rules -> Add rule with custom TCP with port and access ip

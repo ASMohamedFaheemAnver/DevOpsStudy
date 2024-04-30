@@ -20,11 +20,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.send("Hello World, from express");
+  res.send("200K");
 });
 
 app.post("/addUser", async (req, res) => {
-  let collection = await db.collection("users");
+  let collection = db.collection("users");
   let newDocument = req.body;
   newDocument.date = new Date();
   let result = await collection.insertOne(newDocument);
@@ -32,7 +32,7 @@ app.post("/addUser", async (req, res) => {
 });
 
 app.get("/getUsers", async (req, res) => {
-  let collection = await db.collection("users");
+  let collection = db.collection("users");
   let results = await collection
     .find({})
 
