@@ -1,0 +1,27 @@
+# EC2 with github actions
+-> https://www.youtube.com/watch?v=MmidULYvjYE&t=22s
+
+# Permissions 0664 for 'ec2sshkey.pem' are too open. It is required that your private key files are NOT accessible by others.
+-> https://stackoverflow.com/questions/8193768/unprotected-private-key-file-error-using-ssh-into-amazon-ec2-instance-aws
+chmod 400 ec2sshkey.pem
+ssh -i ec2sshkey.pem ec2-user@13.250.3.190
+ssh -i ec2sshkey.pem ubuntu@52.221.236.220
+
+
+# User name of the instance
+-> https://stackoverflow.com/questions/20779454/how-to-find-the-username-of-the-instance-launched-in-amazon-ec2
+-> https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connect-to-linux-instance.html
+-> https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-users.html
+
+# Use below commands to install Docker on AWS EC2:
+sudo apt-get update
+sudo apt-get install docker.io -y
+sudo systemctl start docker
+sudo docker run hello-world
+docker ps
+sudo chmod 666 /var/run/docker.sock
+sudo systemctl enable docker
+docker --version
+
+# permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/containers/json": dial unix /var/run/docker.sock: connect: permission denied
+sudo chmod 666 /var/run/docker.sock

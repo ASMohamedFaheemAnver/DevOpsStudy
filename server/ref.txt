@@ -1,0 +1,2 @@
+# GitHub Actions (Branch Protection, Automated Testing) - Full Tutorial
+-> https://www.youtube.com/watch?v=UEOtZvTCmDo&t=1132s
