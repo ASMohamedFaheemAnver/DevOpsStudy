@@ -42,3 +42,7 @@ Follow the instructions eg. mkdir actions-runner-react && cd actions-runner-reac
 docker ps
 docker ps -a
 docker logs --since=1h <container_id>
+
+# https://stackoverflow.com/questions/30576559/cant-see-my-ec2-instances-on-the-management-console
+-> The most likely explanation is that you have inadvertently switched region. Look in the top right of the interface just to the right of your username. Verify that you are in the region that you expect to be.
+-> The EC2 instances can be placed in any of the regions, but you will only see the EC2 instances for the region that you are currently viewing.
