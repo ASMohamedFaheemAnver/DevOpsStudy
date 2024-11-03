@@ -84,6 +84,10 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        // DETOX START
+        testBuildType System.getProperty('testBuildType', 'debug')
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        // DETOX END
     }
     signingConfigs {
         debug {
@@ -102,7 +106,10 @@ android {
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
+            // DETOX START
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
+            // DETOX END
         }
     }
 }
@@ -111,6 +118,12 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 
+    // DETOX START
+    androidTestImplementation('com.wix:detox:+') { exclude module: "protobuf-lite" }
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    androidTestImplementation 'com.linkedin.testbutler:test-butler-library:2.2.1'
+    // DETOX END
+    
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {
