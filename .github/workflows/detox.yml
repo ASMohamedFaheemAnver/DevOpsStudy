@@ -1,0 +1,48 @@
+name: Build and Test with Detox
+on:
+    pull_request:
+        branches:
+            - udev
+jobs:
+    android-detox:
+        name: Detox build and test for android
+        runs-on: ubuntu-latest
+        env:
+            NODE_OPTIONS: --max_old_space_size=4096
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "20.16.0" # Set to the user's Node.js version
+
+            - name: Install dependencies
+              run: yarn install
+
+            - name: Set up JDK
+              uses: actions/setup-java@v3
+              with:
+                  distribution: "zulu"
+                  java-version: "11"
+
+            - name: Set up Android SDK
+              uses: android-actions/setup-android@v2
+              with:
+                  api-level: 34 # Matches compileSdkVersion and targetSdkVersion in your build.gradle
+                  build-tools: "34.0.0" # Matches buildToolsVersion
+                  ndk: "25.1.8937393" # Matches ndkVersion
+
+            - name: Build android app for detox
+              run: |
+                  cd android
+                  ./gradlew assembleDevRelease assembleDevReleaseAndroidTest -DtestBuildType=release
+
+            - name: Set up patch detox dependencies
+              run: yarn add detox@npm:@avinashbharti97/detox -D && yarn detox build --configuration android.dev.release
+
+            - name: Run detox tests
+              env:
+                  CI: true
+              run: yarn detox test --configuration android.cloud.release
