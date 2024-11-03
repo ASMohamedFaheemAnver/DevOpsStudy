@@ -13,7 +13,7 @@ jobs:
         env:
             NODE_OPTIONS: --max_old_space_size=4096
             BROWSER_STACK_USERNAME: ${{ secrets.BROWSER_STACK_USERNAME }}
-            BROWSER_STACK_ACCESSKEY: ${{ secrets.BROWSER_STACK_ACCESSKEY }}
+            BROWSER_STACK_ACCESS_KEY: ${{ secrets.BROWSER_STACK_ACCESS_KEY }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3

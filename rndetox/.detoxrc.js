@@ -103,7 +103,7 @@ module.exports = {
       app: 'android.release.cloud',
       cloudAuthentication: {
         username: process.env.BROWSER_STACK_USERNAME,
-        accessKey: process.env.BROWSER_STACK_ACCESSKEY,
+        accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
       },
       session: {
         server: 'wss://detox.browserstack.com/init',
