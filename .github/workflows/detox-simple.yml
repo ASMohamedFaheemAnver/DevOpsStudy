@@ -15,6 +15,11 @@ jobs:
             BROWSER_STACK_USERNAME: ${{ secrets.BROWSER_STACK_USERNAME }}
             BROWSER_STACK_ACCESSKEY: ${{ secrets.BROWSER_STACK_ACCESSKEY }}
         steps:
+            - name: Echo GitHub secrets
+              run: |
+                  echo "BROWSER_STACK_USERNAME=${{ secrets.BROWSER_STACK_USERNAME }}"
+                  echo "BROWSER_STACK_ACCESSKEY=${{ secrets.BROWSER_STACK_ACCESSKEY }}"
+
             - name: Checkout repository
               uses: actions/checkout@v3
 
