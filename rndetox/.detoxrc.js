@@ -37,6 +37,13 @@ module.exports = {
       binaryPath: 'android/app/build/outputs/apk/release/app-release.apk',
       build:
         'cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release',
+      // testBinaryPath:
+      //   'android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk',
+    },
+    'android.release.cloud': {
+      type: 'android.cloud',
+      app: 'bs://03e999a1565cff20f8fc62b300bc5a322639bc53',
+      appClient: 'bs://76e9f0beaf7583be88d847b9509eb53179812285',
     },
   },
   devices: {
@@ -56,6 +63,13 @@ module.exports = {
       type: 'android.emulator',
       device: {
         avdName: 'Pixel_7_API_32',
+      },
+    },
+    androidCloud: {
+      type: 'android.cloud',
+      device: {
+        name: 'Samsung Galaxy S21 Plus',
+        osVersion: '11.0',
       },
     },
   },
@@ -83,6 +97,17 @@ module.exports = {
     'android.emu.release': {
       device: 'emulator',
       app: 'android.release',
+    },
+    'android.cloud.release': {
+      device: 'androidCloud',
+      app: 'android.release.cloud',
+      cloudAuthentication: {
+        username: process.env.BROWSER_STACK_USERNAME,
+        accessKey: process.env.BROWSER_STACK_ACCESSKEY,
+      },
+      session: {
+        server: 'wss://detox.browserstack.com/init',
+      },
     },
   },
 };
