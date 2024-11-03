@@ -7,6 +7,7 @@ jobs:
     android-detox:
         name: Detox build and test for android
         runs-on: ubuntu-latest
+        environment: dev # Can specify environment variants
         defaults:
             run:
                 working-directory: ./rndetox/
