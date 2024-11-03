@@ -17,7 +17,10 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
-
+            - name: Echo gitHub secrets
+              run: |
+                  echo "BROWSER_STACK_ACCESS_KEY=${{ secrets.BROWSER_STACK_USERNAME }}"
+                  echo "BROWSER_STACK_ACCESS_KEY=${{ secrets.BROWSER_STACK_ACCESS_KEY }}"
             - name: Set up Node.js
               uses: actions/setup-node@v3
               with:

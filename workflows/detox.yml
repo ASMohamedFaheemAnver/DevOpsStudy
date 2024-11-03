@@ -1,4 +1,4 @@
-name: Build and Test with Detox
+name: Build and test with detox
 on:
     pull_request:
         branches:
@@ -17,6 +17,11 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
+
+            - name: Echo gitHub secrets
+              run: |
+                  echo "BROWSER_STACK_ACCESS_KEY=${{ secrets.BROWSER_STACK_USERNAME }}"
+                  echo "BROWSER_STACK_ACCESS_KEY=${{ secrets.BROWSER_STACK_ACCESS_KEY }}"
 
             - name: Set up Node.js
               uses: actions/setup-node@v3
