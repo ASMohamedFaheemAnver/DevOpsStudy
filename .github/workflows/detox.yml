@@ -42,7 +42,7 @@ jobs:
             - name: Build android app for detox
               run: |
                   cd android
-                  ./gradlew assembleDevRelease assembleDevReleaseAndroidTest -DtestBuildType=release
+                  ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release
 
             - name: Set up patch detox dependencies
               run: yarn add detox@npm:@avinashbharti97/detox -D && yarn detox build --configuration android.dev.release
