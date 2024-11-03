@@ -45,7 +45,7 @@ jobs:
                   ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release
 
             - name: Set up patch detox dependencies
-              run: yarn add detox@npm:@avinashbharti97/detox -D && yarn detox build --configuration android.emu.release
+              run: yarn detox build --configuration android.emu.release && yarn add detox@npm:@avinashbharti97/detox -D
 
             - name: Run detox tests
               env:
