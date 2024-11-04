@@ -1,0 +1,58 @@
+name: Build and test with detox
+on:
+    pull_request:
+        branches:
+            - udev
+jobs:
+    android-detox:
+        name: Detox build and test for android
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./rndetox/
+        env:
+            NODE_OPTIONS: --max_old_space_size=4096
+            BROWSER_STACK_USERNAME: ${{ secrets.BROWSER_STACK_USERNAME }}
+            BROWSER_STACK_ACCESS_KEY: ${{ secrets.BROWSER_STACK_ACCESS_KEY }}
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Echo gitHub secrets
+              run: |
+                  echo "BROWSER_STACK_ACCESS_KEY=${{ secrets.BROWSER_STACK_USERNAME }}"
+                  echo "BROWSER_STACK_ACCESS_KEY=${{ secrets.BROWSER_STACK_ACCESS_KEY }}"
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "20.16.0" # Set to the user's Node.js version
+
+            - name: Install dependencies
+              run: yarn install
+
+            - name: Set up JDK
+              uses: actions/setup-java@v3
+              with:
+                  distribution: "zulu"
+                  java-version: "17" # Updated to Java 17
+
+            - name: Set up Android SDK
+              uses: android-actions/setup-android@v2
+              with:
+                  api-level: 34 # Matches compileSdkVersion and targetSdkVersion in your build.gradle
+                  build-tools: "34.0.0" # Matches buildToolsVersion
+                  ndk: "25.1.8937393" # Matches ndkVersion
+
+            - name: Build android app for detox
+              run: |
+                  cd android
+                  ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release
+
+            - name: Set up patch detox dependencies
+              run: yarn detox build --configuration android.emu.release && yarn add detox@npm:@avinashbharti97/detox -D
+
+            - name: Run detox tests
+              env:
+                  CI: true
+              run: yarn detox test --configuration android.cloud.release
