@@ -1,0 +1,5 @@
+Manual configuration
+https://www.youtube.com/watch?v=gChzfhVGqp8&t=810s&ab_channel=MafiaCodes
+
+Todo
+https://github.com/docker-library/mongo/issues/475#issuecomment-1549332459
