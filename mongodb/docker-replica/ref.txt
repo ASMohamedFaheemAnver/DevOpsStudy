@@ -25,6 +25,7 @@ db.users.insert({name: "udev", age: 27})
 # Connection string example
 mongodb://root:password@localhost:27018/?replicaSet=replica-set
 
-# Connect using mongosh externally
+# Connect using mongosh externally using localhost and ip
 mongosh "mongodb://root:password@192.168.1.103:27017,192.168.1.103:27018,192.168.1.103:27019,192.168.1.103:27020/?replicaSet=replica-set"
+mongosh "mongodb://root:password@localhost:27017,localhost:27018,localhost:27019,localhost:27020/?replicaSet=replica-set"
 # Ref: 192.168.1.103 is public ip of the host wifi
