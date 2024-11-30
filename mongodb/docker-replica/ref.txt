@@ -1,8 +1,29 @@
 # Run the app
 docker compose up / docker compose up -d (terminal will be free for other tasks)
+# To clear network configs
+docker network prune
+# To create all configs
+docker-compose up --force-recreate
+# To clear all docker 
+docker system prune  
+# To clear all volume
+docker volume prune
 
 # Connect to primary
 docker compose exec mongo-primary mongosh -u "root" -p "password"
 
 # Instantiate the replica set
+# Internal
 rs.initiate({"_id" : "replica-set","members" : [{"_id" : 0,"host" : "mongo-primary:27017"},{"_id" : 1,"host" : "mongo-worker-1:27017"},{"_id" : 2,"host" : "mongo-worker-2:27017"},{"_id" : 3,"host" : "mongo-worker-3:27017"}]});
+
+# External
+rs.initiate({ "_id": "replica-set", "members": [{ "_id": 0, "host": "192.168.1.103:27017" }, { "_id": 1, "host": "192.168.1.103:27018" }, { "_id": 2, "host": "192.168.1.103:27019" }, { "_id": 3, "host": "192.168.1.103:27020" }] });
+
+# Create user
+db.users.insert({name: "udev", age: 27})
+
+# Connection string example
+mongodb://root:password@localhost:27018/?replicaSet=replica-set
+
+# Connect using mongosh externally
+mongosh "mongodb://root:password@192.168.1.103:27017,192.168.1.103:27018,192.168.1.103:27019,192.168.1.103:27020/?replicaSet=replica-set"
