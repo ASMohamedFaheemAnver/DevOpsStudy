@@ -1,0 +1,57 @@
+Step 1
+https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
+brew tap mongodb/brew
+brew update
+brew install mongodb-community@8.0
+
+Step 2
+mkdir -p mongos/db1
+mkdir -p mongos/db2
+mkdir -p mongos/db3
+
+Step 3
+Make sure you are inside mongodb folder in terminal
+
+mongod --port 2717 --dbpath ./mongos/db1 --replSet rs0
+mongod --port 2718 --dbpath ./mongos/db2 --replSet rs0
+mongod --port 2719 --dbpath ./mongos/db3 --replSet rs0
+
+Step 4
+
+mongosh --port 2717
+rs.status() -> MongoServerError[NotYetInitialized]: no replset config has been received
+
+Step 5
+rs.initiate()
+rs.status()
+Can check members of rs0
+cls -> to clear
+
+Step 6
+Add more members
+rs.add("localhost:2718")
+rs.add("localhost:2719")
+
+Step 7
+Shut down instances to see "PRIMARY INSTANCE" changes
+
+Step 8
+show dbs -> To see schemas
+use unityms
+db.users.insert({name: "udev", age: 27})
+db.users.find()
+
+Step 9
+Connect to different node
+mongosh --port 2718
+use unityms
+db.users.find()
+-> If error comes rs.secondaryOk() which is deprecated
+-> DeprecationWarning: .setSecondaryOk() is deprecated. Use .setReadPref("primaryPreferred") instead
+-> Setting read preference from "primary" to "primaryPreferred"
+
+Step 10
+Connect from compass
+mongodb://localhost:2717,localhost:2718,localhost:2719?replicaSet=rs0
+Or 
+mongodb://localhost:2717
