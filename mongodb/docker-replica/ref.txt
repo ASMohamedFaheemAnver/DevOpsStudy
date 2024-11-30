@@ -1,0 +1,8 @@
+# Run the app
+docker compose up / docker compose up -d (terminal will be free for other tasks)
+
+# Connect to primary
+docker compose exec mongo-primary mongosh -u "root" -p "password"
+
+# Instantiate the replica set
+rs.initiate({"_id" : "replica-set","members" : [{"_id" : 0,"host" : "mongo-primary:27017"},{"_id" : 1,"host" : "mongo-worker-1:27017"},{"_id" : 2,"host" : "mongo-worker-2:27017"},{"_id" : 3,"host" : "mongo-worker-3:27017"}]});
