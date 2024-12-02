@@ -97,3 +97,20 @@ services:
     entrypoint: ["/docker-entrypoint-initdb.d/init-replica.sh"]
     networks:
       replica-set:
+
+  server-1:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    depends_on:
+      - mongo-init-replica
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    command: ["npm", "run", "start"]
+    networks:
+      replica-set:
